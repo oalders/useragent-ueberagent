@@ -21,7 +21,6 @@ has os => (
         my $class = __PACKAGE__ . '::OS';
         die "$class object expected" if !$_[0]->$_isa( $class );
     },
-    isa => 'UserAgent::UeberAgent::OS',
 );
 
 has raw => (
