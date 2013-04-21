@@ -4,24 +4,7 @@ use warnings;
 package UserAgent::UeberAgent::Version;
 
 use Moo;
-use MooX::Types::MooseLike::Base qw(Int Str);
-
-has product_name => (
-    is       => 'ro',
-    isa      => Str,
-    required => 1,
-);
-
-has number => (
-    is       => 'ro',
-    isa      => Str,
-    required => 1,
-);
-
-has major => (
-    is  => 'ro',
-    isa => Int,
-);
+with 'UserAgent::UeberAgent::Role::Version';
 
 1;
 
