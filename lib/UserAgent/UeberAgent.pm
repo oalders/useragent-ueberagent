@@ -5,7 +5,6 @@ package UserAgent::UeberAgent;
 
 use Moo;
 use MooX::Types::MooseLike::Base qw(InstanceOf Maybe Str);
-use Safe::Isa;
 
 foreach my $suffix ( 'Browser', 'Device', 'Engine', 'OS' ) {
     my $class = __PACKAGE__ . '::' . $suffix;
