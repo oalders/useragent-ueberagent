@@ -4,24 +4,17 @@ use warnings;
 package UserAgent::UeberAgent;
 
 use Moo;
-use MooX::Types::MooseLike::Base qw(Str);
+use MooX::Types::MooseLike::Base qw(InstanceOf Maybe Str);
 use Safe::Isa;
 
-has browser => (
-    is  => 'ro',
-    isa => sub {
-        my $class = __PACKAGE__ . '::Browser';
-        die "$class object expected" if !$_[0]->$_isa( $class );
-    },
-);
-
-has os => (
-    is  => 'ro',
-    isa => sub {
-        my $class = __PACKAGE__ . '::OS';
-        die "$class object expected" if !$_[0]->$_isa( $class );
-    },
-);
+foreach my $suffix ( 'Browser', 'Device', 'Engine', 'OS' ) {
+    my $class = __PACKAGE__ . '::' . $suffix;
+    has lc( $suffix ) => (
+        is   => 'ro',
+        isa  => Maybe [ InstanceOf [$class] ],
+        lazy => 1,
+    );
+}
 
 has raw => (
     is       => 'ro',
@@ -44,6 +37,7 @@ say $ua->language;
 say $ua->country;
 say $ua->os->name;
 say $ua->os->version;
+say $ua->os->bits; # 32, 64 or undef
 say $ua->device->is_mobile;
 say $ua->device->name;
 say $ua->browser->name;

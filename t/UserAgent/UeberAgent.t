@@ -8,4 +8,8 @@ my $ua
 my $ueber = UserAgent::UeberAgent->new( raw => $ua );
 ok( $ueber, "creates object" );
 
+foreach my $suffix ( 'browser', 'device', 'engine', 'os' ) {
+    is( $ueber->device, undef, "device not defined yet" );
+}
+
 done_testing();
