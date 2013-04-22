@@ -9,10 +9,16 @@ use MooX::Types::MooseLike::Base qw(InstanceOf Maybe Str);
 foreach my $suffix ( 'Browser', 'Device', 'Engine', 'OS' ) {
     my $class = __PACKAGE__ . '::' . $suffix;
     has lc( $suffix ) => (
-        is   => 'ro',
+        is   => 'lazy',
         isa  => Maybe [ InstanceOf [$class] ],
-        lazy => 1,
     );
+}
+
+sub BUILDARGS {
+    my ( $class, @args ) = @_;
+
+    return { raw => $args[0] } if @args == 1;
+    return {@args};
 }
 
 has raw => (
@@ -20,6 +26,19 @@ has raw => (
     isa      => Str,
     required => 1,
 );
+
+sub _build_browser {
+    return undef;
+}
+sub _build_device {
+    return undef;
+}
+sub _build_engine {
+    return undef;
+}
+sub _build_os {
+    return undef;
+}
 
 1;
 
